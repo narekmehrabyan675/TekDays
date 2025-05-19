@@ -16,6 +16,15 @@ class BootStrap {
                 email: 'john.deere@porkproducers.org',
                 website: 'www.perl.porkproducers.org',
                 bio: 'John is a top notch Perl programmer and a ...').save()
+        def s1 = new Sponsor(name: 'Contegix' ,
+                website:'http://www.contegix.com',
+                description:'Beyond Managed Hosting for your Enterprise').save()
+        def s2 = new Sponsor(name:'Object Computing Incorporated',
+                website:'http://ociweb.com',
+                description:'An OO Software Engineering Company').save()
+
+
+
         def event1 = new TekEvent(name:'Getway Code Camp',
                      city: 'Yerevan',
                      organizer: TekUser.findByFullName('John Doe'),
@@ -36,6 +45,17 @@ class BootStrap {
                 event2.addToRespondents('zachary@linuxgurus.org')
                 event2.addToRespondents('solomon@bootstrapwelding.com')
                 event2.save()
+
+        def sp1 = new Sponsorship(event: event1,sponsor: s1 ,
+                                contributionType: 'Other' , description: 'Cool T-Shirts').save()
+        //event1.addToSponsorships(sp1).save()
+        //event2.addToSponsorships(sp1).save()
+        def sp2 = new Sponsorship(event: event1 , sponsor: s2 ,
+                                contributionType: 'Venue' , description: 'Will be paying for the Moscone').save()
+        def sp3 = new Sponsorship(event: event2 , sponsor: s1 ,
+                contributionType: 'Venue' , description: '123456').save()
+        //event2.addToSponsorships(sp3).save()
+
     }
 
     def destroy = {

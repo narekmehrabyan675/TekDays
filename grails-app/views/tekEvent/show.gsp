@@ -126,6 +126,24 @@
 					</span>
 				</li>
 
+				<li class="fieldcontain">
+					<span id="respondents-label" class="property-label">
+						<g:message code="tekEvent.volunteers.label" default="Sponsorships" />
+					</span>
+					<span class="property-value" aria-labelledby="respondents-label">
+						<g:if test="${tekEventInstance?.sponsorships && tekEventInstance.sponsorships.size() > 0}">
+							<ul style="list-style-type: none; padding-left: 0;">
+								<g:each in="${tekEventInstance.sponsorships}" var="sponsorship">
+									<li>${sponsorship}</li>
+								</g:each>
+							</ul>
+						</g:if>
+						<g:else>
+							<p>Dont have sponsorships!</p>
+						</g:else>
+					</span>
+				</li>
+
 
 				%{--				<g:if test="${tekEventInstance?.venue}">--}%
 %{--				<li class="fieldcontain">--}%
