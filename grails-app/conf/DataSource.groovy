@@ -18,8 +18,18 @@ hibernate {
 environments {
     development {
         dataSource {
+            dbCreate = "update"
+
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            //url = "jdbc:h2:./devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            //Launching as Server using TCP
+            /*url = "jdbc:h2:tcp://localhost/~/Project/TekDays/devDb;MVCC=TRUE;DB_CLOSE_ON_EXIT=FALSE"
+
+
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""*/
         }
     }
     test {

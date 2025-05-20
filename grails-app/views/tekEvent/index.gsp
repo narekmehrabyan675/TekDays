@@ -32,7 +32,7 @@
 					
 						<g:sortableColumn property="endDate" title="${message(code: 'tekEvent.endDate.label', default: 'End Date')}" />
 					
-						<g:sortableColumn property="organizer" title="${message(code: 'tekEvent.organizer.label', default: 'Organizer')}" />
+						<th><g:message code="tekEvent.organizer.label" default="Organizer" /></th>
 					
 						<g:sortableColumn property="startDate" title="${message(code: 'tekEvent.startDate.label', default: 'Start Date')}" />
 					

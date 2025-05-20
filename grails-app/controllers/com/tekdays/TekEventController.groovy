@@ -1,87 +1,104 @@
 package com.tekdays
 
+
+
+import static org.springframework.http.HttpStatus.*
+import grails.transaction.Transactional
+
+@Transactional(readOnly = true)
 class TekEventController {
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond TekEvent.list(params), model:[tekEventInstanceCount: TekEvent.count()]
+    }
+//We can give as parameter id of object on database
+    def show(TekEvent tekEventInstance) {
+        respond tekEventInstance
+    }
+
     def create() {
-        [tekEventInstance: new TekEvent()]
+        respond new TekEvent(params)
     }
 
-    def save() {
-        def organizerName = params.organizerName
-        def tekEventInstance = new TekEvent(params)
-        tekEventInstance.organizer = TekUser.findByFullName(organizerName)
-        def volunteerIds = params.list('volunteerIds')*.toLong()
-        def volunteers = TekUser.getAll(volunteerIds)
-        volunteers.each { tekEventInstance.addToVolunteers(it) }
-
-        if (!tekEventInstance.save(flush: true)) {
-            render view: 'create', model: [tekEventInstance: tekEventInstance]
+    @Transactional
+    def save(TekEvent tekEventInstance) {
+        if (tekEventInstance == null) {
+            notFound()
             return
         }
-        flash.message = "Created successfully"
-        redirect action: "show", id: tekEventInstance.id
-    }
 
-    def show(Long id) {
-        def tekEventInstance = TekEvent.get(id)
-        if (!tekEventInstance) {
-            flash.message = "Not found"
-            redirect action: "index"
+        if (tekEventInstance.hasErrors()) {
+            respond tekEventInstance.errors, view:'create'
             return
         }
-        //tekEventInstance.name = "Pushkin"
-        [tekEventInstance: tekEventInstance]
-    }
 
-    def edit(Long id) {
-        def tekEventInstance = TekEvent.get(id)
-        if (!tekEventInstance) {
-            flash.message = "Not found"
-            redirect action: "index"
-            return
-        }
-        [tekEventInstance: tekEventInstance]
-    }
+        tekEventInstance.save flush:true
 
-    def update() {
-        def tekEventInstance = TekEvent.get(params.id)
-
-        if (!tekEventInstance) {
-            flash.message = "TekEvent not found"
-            redirect action: "index"
-            return
-        }
-        def organizerName = params.organizerName
-
-        tekEventInstance.properties = params  // updates
-        tekEventInstance.organizer = TekUser.findByFullName(organizerName)
-
-        def volunteerIds = params.list('volunteerIds')*.toLong()
-        tekEventInstance.volunteers.clear()  // removing all
-        volunteerIds.each {
-            def volunteer = TekUser.get(it)
-            if (volunteer) {
-                tekEventInstance.addToVolunteers(volunteer)
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+                redirect tekEventInstance
             }
+            '*' { respond tekEventInstance, [status: CREATED] }
         }
+    }
 
-        if (!tekEventInstance.save(flush: true)) {
-            render view: 'edit', model: [tekEventInstance: tekEventInstance]
+    def edit(TekEvent tekEventInstance) {
+        respond tekEventInstance
+    }
+
+    @Transactional
+    def update(TekEvent tekEventInstance) {
+        if (tekEventInstance == null) {
+            notFound()
             return
         }
 
-        flash.message = "TekEvent updated successfully"
-        redirect action: "show", id: tekEventInstance.id
+        if (tekEventInstance.hasErrors()) {
+            respond tekEventInstance.errors, view:'edit'
+            return
+        }
+
+        tekEventInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'TekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+                redirect tekEventInstance
+            }
+            '*'{ respond tekEventInstance, [status: OK] }
+        }
     }
 
-    def delete(Long id){
-        TekEvent.get(id).delete(flush: true)
-        flash.message = "✅ Event deleted successfully"
-        redirect action: "index"
+    @Transactional
+    def delete(TekEvent tekEventInstance) {
+
+        if (tekEventInstance == null) {
+            notFound()
+            return
+        }
+
+        tekEventInstance.delete flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'TekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
     }
 
-
-    def index() {
-        [tekEventInstanceList: TekEvent.list()]
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'tekEvent.label', default: 'TekEvent'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
     }
-
 }

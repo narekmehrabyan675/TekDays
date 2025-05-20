@@ -1,0 +1,40 @@
+# IDE (IntelliJ IDEA, Eclipse, STS)
+.idea/
+*.iml
+.classpath
+.project
+
+# Build
+target/
+build/
+out/
+
+# Grails-specific
+stacktrace.log
+test/reports/
+web-app/plugins/
+web-app/WEB-INF/classes/
+web-app/WEB-INF/lib/
+web-app/WEB-INF/grails-app/
+web-app/WEB-INF/spring/
+web-app/WEB-INF/web.xml
+
+# Compiled classes and scripts
+*.class
+*.log
+
+# Grails wrapper
+grailsw
+grailsw.bat
+
+# Database files
+*.db
+*.trace.db
+
+# Cache
+.asscache
+.slcache
+
+# OS-specific
+.DS_Store
+Thumbs.db

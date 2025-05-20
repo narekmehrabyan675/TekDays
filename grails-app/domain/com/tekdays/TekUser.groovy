@@ -7,6 +7,7 @@ class TekUser {
     String email
     String website
     String bio
+    //TekEvent event
 
 
     String toString(){fullName}
@@ -18,5 +19,6 @@ class TekUser {
         website()
         bio maxSize: 5000
     }
-    static belongsTo = TekEvent
+    //Gna tes um es kcvac
+    //static belongsTo = [event : TekEvent]
 }

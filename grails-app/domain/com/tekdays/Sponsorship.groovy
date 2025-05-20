@@ -7,9 +7,10 @@ class Sponsorship {
     String description
     String notes
 
-    String toString(){
-        "$sponsor.name , will sponsor $description"
+    String toString() {
+        "${sponsor?.name} will sponsor ${description}"
     }
+
     static constraints = {
         event nullable: false
         sponsor nullable: false
