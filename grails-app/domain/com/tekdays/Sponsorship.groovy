@@ -8,7 +8,7 @@ class Sponsorship {
     String notes
 
     String toString() {
-        "${sponsor?.name} will sponsor ${description}"
+        "${sponsor?.name}"
     }
 
     static constraints = {

@@ -3,7 +3,7 @@ import com.tekdays.*
 class BootStrap {
 
     def init = { servletContext ->
-        new TekUser(fullName: 'John Doe',
+        /*new TekUser(fullName: 'John Doe',
                 userName: 'jdoe',
                 password: 't0ps3cr3t',
                 email: 'jdoe@johnsgroovyshop.com',
@@ -55,8 +55,7 @@ class BootStrap {
         def sp3 = new Sponsorship(event: event2 , sponsor: s1 ,
                 contributionType: 'Venue' , description: '123456').save()
         //event2.addToSponsorships(sp3).save()
-
-    }
+*/    }
 
     def destroy = {
     }

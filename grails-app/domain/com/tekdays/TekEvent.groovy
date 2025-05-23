@@ -1,8 +1,10 @@
 package com.tekdays
 
+import javax.persistence.Transient
 import java.util.Date
 
 class TekEvent {
+    //@Transient
     String city
     String name
     //String organizer//will be TekUser
@@ -22,6 +24,8 @@ class TekEvent {
         name column: 'persons_name'
         city column: 'pleace'
         description sqlType: 'TEXT'
+        sponsorships cascade: 'all-delete-orphan'
+        volunteers cascade: 'save-update'
     }
     static constraints = {
         name(blank: false)

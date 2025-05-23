@@ -62,6 +62,11 @@
 </li>
 </ul>
 
+	%{--<div class="fieldcontain">
+		<label for="sponsorId">Sponsor</label>
+		<g:select name="sponsorId" from="${com.tekdays.Sponsor.list()}" optionKey="id"/>
+	</div>
+--}%
 
 </div>
 
@@ -70,7 +75,8 @@
 		<g:message code="tekEvent.tasks.label" default="Tasks" />
 		
 	</label>
-	
+
+
 <ul class="one-to-many">
 <g:each in="${tekEventInstance?.tasks?}" var="t">
     <li><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
@@ -82,6 +88,8 @@
 
 
 </div>
+
+
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'messages', 'error')} ">
 	<label for="messages">

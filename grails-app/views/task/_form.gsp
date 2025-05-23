@@ -32,7 +32,7 @@
 <div class="fieldcontain ${hasErrors(bean: taskInstance, field: 'dueDate', 'error')} ">
 	<label for="dueDate">
 		<g:message code="task.dueDate.label" default="Due Date" />
-		
+
 	</label>
 	<g:datePicker name="dueDate" precision="day"  value="${taskInstance?.dueDate}" default="none" noSelection="['': '']" />
 
@@ -45,5 +45,13 @@
 	</label>
 	<g:select id="event" name="event.id" from="${com.tekdays.TekEvent.list()}" optionKey="id" required="" value="${taskInstance?.event?.id}" class="many-to-one"/>
 
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: taskInstance, field: 'completed',
+		'error')} ">
+	<label for="completed">
+		<g:message code="task.completed.label" default="Completed" />
+	</label>
+	<g:checkBox name="completed" value="${taskInstance?.completed}" />
 </div>
 

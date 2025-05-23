@@ -8,6 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class TekEventController {
 
+    TaskService taskService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -22,7 +23,6 @@ class TekEventController {
     def create() {
         respond new TekEvent(params)
     }
-
     @Transactional
     def save(TekEvent tekEventInstance) {
         if (tekEventInstance == null) {
@@ -35,16 +35,35 @@ class TekEventController {
             return
         }
 
-        tekEventInstance.save flush:true
+        // Creaeting Sponsorship
+        // Is form we have SpnsorID creating via that
+        if (params.sponsorId) {
+            def sponsor = Sponsor.get(params.sponsorId as Long)
+            def sponsorship = new Sponsorship(
+                    sponsor: sponsor,
+                    event: tekEventInstance,
+                    contributionType: "Cash",
+                    description: "Auto-added",
+                    notes: ""
+            )
+            tekEventInstance.addToSponsorships(sponsorship)
+        }
+        taskService.addDefaultTasks(tekEventInstance)
+        // Save event
+        tekEventInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+                flash.message = message(code: 'default.created.message',
+                        args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
                 redirect tekEventInstance
             }
             '*' { respond tekEventInstance, [status: CREATED] }
         }
     }
+
+
+
 
     def edit(TekEvent tekEventInstance) {
         respond tekEventInstance
@@ -60,6 +79,10 @@ class TekEventController {
         if (tekEventInstance.hasErrors()) {
             respond tekEventInstance.errors, view:'edit'
             return
+        }
+
+        if(params.volunteers==null ){
+            tekEventInstance.volunteers.clear()
         }
 
         tekEventInstance.save flush:true

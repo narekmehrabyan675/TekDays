@@ -30,10 +30,16 @@
 					
 						<g:sortableColumn property="description" title="${message(code: 'tekEvent.description.label', default: 'Description')}" />
 					
+%{--
 						<g:sortableColumn property="endDate" title="${message(code: 'tekEvent.endDate.label', default: 'End Date')}" />
-					
+--}%
+
+%{--
 						<th><g:message code="tekEvent.organizer.label" default="Organizer" /></th>
-					
+--}%
+						<g:sortableColumn property="venue" title="${message(code: 'tekEvent.venue.label', default: 'Venue')}" />
+
+
 						<g:sortableColumn property="startDate" title="${message(code: 'tekEvent.startDate.label', default: 'Start Date')}" />
 					
 					</tr>
@@ -45,13 +51,20 @@
 						<td><g:link action="show" id="${tekEventInstance.id}">${fieldValue(bean: tekEventInstance, field: "name")}</g:link></td>
 					
 						<td>${fieldValue(bean: tekEventInstance, field: "city")}</td>
-					
+
 						<td>${fieldValue(bean: tekEventInstance, field: "description")}</td>
-					
-						<td><g:formatDate date="${tekEventInstance.endDate}" /></td>
-					
+
+						<td>${fieldValue(bean: tekEventInstance, field: "venue")}</td>
+
+
+						%{--
+                                                <td><g:formatDate date="${tekEventInstance.endDate}" /></td>
+                        --}%
+
+%{--
 						<td>${fieldValue(bean: tekEventInstance, field: "organizer")}</td>
-					
+--}%
+
 						<td><g:formatDate date="${tekEventInstance.startDate}" /></td>
 					
 					</tr>

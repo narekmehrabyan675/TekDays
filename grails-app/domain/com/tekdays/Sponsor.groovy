@@ -12,6 +12,8 @@ class Sponsor {
 
     static hasMany = [sponsorships: Sponsorship]
 
+
+
     static constraints = {
         name blank: false
         website blank: false, url: true
