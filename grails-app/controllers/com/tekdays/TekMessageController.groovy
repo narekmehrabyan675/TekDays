@@ -25,9 +25,29 @@ class TekMessageController {
             count = TekMessage.count()
         }
 
-        [tekMessageInstanceList: list,
-         tekMessageInstanceCount: count,
-         event: event]
+        render view: 'ajaxIndex' , model:  [tekMessageInstanceList: list,
+                                            tekMessageInstanceCount: count,
+                                            event: event]
+    }
+
+    def index2(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+
+        def list
+        def count
+        def event = TekEvent.get(params.idevent)
+        if(event){
+            list = TekMessage.findAllByEvent(event , params)
+            count = TekMessage.countByEvent(event)
+        }
+        else {
+            list = TekMessage.list(params)
+            count = TekMessage.count()
+        }
+
+        render view: 'ajaxIndex' , model:  [tekMessageInstanceList: list,
+                                            tekMessageInstanceCount: count,
+                                            event: event]
     }
 
     def show(TekMessage tekMessageInstance) {
@@ -35,8 +55,13 @@ class TekMessageController {
     }
 
     def create() {
-        respond new TekMessage(params)
+        def message = new TekMessage(params)
+        if (params.eventId) {
+            message.event = TekEvent.get(params.eventId)
+        }
+        respond message
     }
+
 
     @Transactional
     def save(TekMessage tekMessageInstance) {
@@ -49,6 +74,7 @@ class TekMessageController {
             respond tekMessageInstance.errors, view:'create'
             return
         }
+        //tekMessageInstance.event = params.eventId
 
         tekMessageInstance.save flush:true
 
@@ -105,6 +131,22 @@ class TekMessageController {
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+    def showDetail(){
+        def tekMessageInstance = TekMessage.get(params.id)
+        if(tekMessageInstance){
+            render(template: "details" , model: ['tekMessageInstance' : tekMessageInstance])
+        }else {
+            render "No message found with id: ${params.id}"
+        }
+    }
+
+    def reply(){
+        def parent = TekMessage.get(params.id)
+        def tekMessageInstance = new TekMessage(parent: parent , event: parent.event ,
+                                                subject: "RE: $parent.subject" )
+        render view: 'create' , model: ['tekMessageInstance' : tekMessageInstance]
     }
 
     protected void notFound() {

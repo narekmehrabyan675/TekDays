@@ -157,6 +157,18 @@
 							</g:link></span>
 					</li>
 				</g:if>
+				<g:else>
+					<li class="fieldcontain">
+						<span id="messages-label" class="property-label">
+							<g:message code="tekEvent.messages.label" default="Messages" />
+						</span>
+						<span class="property-value" aria-labelledby="messages-label">
+							<g:link controller="tekMessage" action="create" params="[eventId: tekEventInstance.id]">
+								Add Message
+							</g:link>
+						</span>
+					</li>
+				</g:else>
 			</ol>
 			<g:form url="[resource:tekEventInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
