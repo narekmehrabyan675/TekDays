@@ -7,9 +7,8 @@ class GroovyFilters {
             before = {
                 if (!controllerName)
                     return true
-                def allowedActions = ['show', 'index', 'login',
 
-                                      'validate']
+                def allowedActions = ['show', 'index', 'login', 'validate']
 
                 if (!session.user && !allowedActions.contains(actionName)){
                     redirect(controller:'tekUser', action:'login',

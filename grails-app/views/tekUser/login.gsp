@@ -25,8 +25,10 @@
         <td class="value">
         <input type="password" id="password" name="password" value="">
     </td>
-        <td><input type="hidden" name="cName" value="${cName}">
-            <input type="hidden" name="aName" value="${aName}"></td>
+        <td>
+            <input type="hidden" name="cName" value="${cName}">
+            <input type="hidden" name="aName" value="${aName}">
+        </td>
 
     </tr>
         <tr>
