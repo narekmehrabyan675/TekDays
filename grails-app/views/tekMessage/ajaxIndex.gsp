@@ -23,12 +23,13 @@
 <div id="list-tekMessage" class="content scaffold-list" role="main">
     <h1>${event?.name} - Forum Messages</h1>
     <div id="messageList">
-        <g:each in="${tekMessageInstanceList}" var="tekMessageInstance">
+        <g:messageThread messages="${tekMessageInstanceList}"/>
+       %{-- <g:each in="${tekMessageInstanceList}" var="tekMessageInstance">
             <g:remoteLink action="showDetail" id="${tekMessageInstance?.id}"
                            update="details">
                  <p style="margin-left: 25px;">${tekMessageInstance.author.fullName} - ${tekMessageInstance.subject}</p>
                  </g:remoteLink>
-        </g:each>
+        </g:each>--}%
     </div>
     <h3 style="margin-left: 25px;">Message Details</h3>
     <div id="details">

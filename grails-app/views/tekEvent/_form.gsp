@@ -145,3 +145,6 @@
 
 </div>
 
+<g:hiddenField name="csrfToken" value="${csrfToken}" />
+
+

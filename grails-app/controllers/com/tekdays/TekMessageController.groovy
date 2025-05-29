@@ -56,9 +56,20 @@ class TekMessageController {
 
     def create() {
         def message = new TekMessage(params)
+        log.debug"Message will be created for event ${TekEvent.get(params.eventId)}"
+        log.error"Message will be created for event ${TekEvent.get(params.eventId)}"
+        log.info"Message will be created for event ${TekEvent.get(params.eventId)}"
+
         if (params.eventId) {
             message.event = TekEvent.get(params.eventId)
         }
+
+        log.error"Event id is ${params.eventId}"
+
+        log.error"Message will be created for event ${TekEvent.findById(params.eventId as Long)}"
+
+        log.error"Message will be created for event $message.event}"
+
         respond message
     }
 

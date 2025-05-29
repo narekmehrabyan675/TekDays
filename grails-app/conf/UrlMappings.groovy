@@ -8,6 +8,8 @@ class UrlMappings {
         }
 
         "/"(view:"/index")
+        "/tekEvent/update"(controller: "tekEvent", action: "update")
+
         "500"(view:'/error')
 	}
 }

@@ -3,6 +3,7 @@ package com.tekdays
 
 
 import static org.springframework.http.HttpStatus.*
+import javax.servlet.http.HttpSession
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -65,7 +66,7 @@ class TekEventController {
 
 
 
-    def edit(TekEvent tekEventInstance) {
+    /*def edit(TekEvent tekEventInstance) {
         respond tekEventInstance
     }
 
@@ -94,7 +95,61 @@ class TekEventController {
             }
             '*'{ respond tekEventInstance, [status: OK] }
         }
+    }*/
+
+    def edit(TekEvent tekEventInstance) {
+        if (!tekEventInstance) {
+            notFound()
+            return
+        }
+
+        // Generate CSRF token and add in session
+        String csrfToken = UUID.randomUUID().toString()
+        session.csrfToken = csrfToken
+
+        // Giving token on model
+        respond tekEventInstance, model: [csrfToken: csrfToken]
     }
+
+    @Transactional
+    def update(TekEvent tekEventInstance) {
+        if (tekEventInstance == null) {
+            notFound()
+            return
+        }
+
+        // Giving token from Request and Session
+        String tokenFromRequest = params.csrfToken
+        String tokenFromSession = session.csrfToken
+
+        if (!tokenFromRequest || tokenFromRequest != tokenFromSession) {
+            render status: 403, text: 'CSRF token validation failed'
+            return
+        }
+
+
+        session.csrfToken = null
+
+        if (tekEventInstance.hasErrors()) {
+            respond tekEventInstance.errors, view:'edit'
+            return
+        }
+
+        if(params.volunteers == null){
+            tekEventInstance.volunteers.clear()
+        }
+
+        tekEventInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'TekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+                redirect tekEventInstance
+            }
+            '*'{ respond tekEventInstance, [status: OK] }
+        }
+    }
+
 
     @Transactional
     def delete(TekEvent tekEventInstance) {
