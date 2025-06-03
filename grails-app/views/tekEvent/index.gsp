@@ -74,6 +74,11 @@
 			<div class="pagination">
 				<g:paginate total="${tekEventInstanceCount ?: 0}" />
 			</div>
+
+
 		</div>
+
+
+
 	</body>
 </html>

@@ -10,6 +10,7 @@ import grails.transaction.Transactional
 class TekEventController {
 
     TaskService taskService
+    EventService eventService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -168,6 +169,21 @@ class TekEventController {
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+    def search(){
+        if(params.query){
+            def events = eventService.search1(params.query)
+            [events: events ]
+        }
+    }
+
+    def volunteer(){
+        def event = TekEvent.get(params.id)
+        event.addToVolunteers(session.user)
+        event.save flush:true
+        event.volunteers
+        render"Thank you for Volunteering!"
     }
 
     protected void notFound() {

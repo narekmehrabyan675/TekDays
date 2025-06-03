@@ -20,11 +20,21 @@ class SponsorshipController {
     }
 
     def create() {
-        respond new Sponsorship(params)
+        def sponsorship =  new Sponsorship(params)
+        if (params.sponsor!=null) {
+            sponsorship.sponsor = Sponsor.findById(params.long('sponsor'))
+            //sponsorship.sponsor = Sponsor.get(params.sponsor)
+        }
+        respond sponsorship
     }
 
     @Transactional
     def save(Sponsorship sponsorshipInstance) {
+
+        if (params["sponsor.id"]) {
+            sponsorshipInstance.sponsor = Sponsor.get(params["sponsor.id"])
+        }
+
         if (sponsorshipInstance == null) {
             notFound()
             return
@@ -34,6 +44,7 @@ class SponsorshipController {
             respond sponsorshipInstance.errors, view:'create'
             return
         }
+
 
         sponsorshipInstance.save flush:true
 

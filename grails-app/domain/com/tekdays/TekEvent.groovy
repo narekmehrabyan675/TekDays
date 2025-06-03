@@ -24,7 +24,7 @@ class TekEvent {
         name column: 'persons_name'
         city column: 'pleace'
         description sqlType: 'TEXT'
-        sponsorships cascade: 'all-delete-orphan'
+        sponsorships cascade: 'all'
         volunteers cascade: 'save-update'
     }
     static constraints = {

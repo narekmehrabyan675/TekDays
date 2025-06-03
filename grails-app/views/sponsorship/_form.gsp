@@ -48,4 +48,7 @@
 	<g:textArea name="notes" cols="40" rows="5" maxlength="5000" value="${sponsorshipInstance?.notes}"/>
 
 </div>
+<div>
+	<g:hiddenField name="sponsor.id" value="${sponsorship?.sponsor?.id}" />
+</div>
 

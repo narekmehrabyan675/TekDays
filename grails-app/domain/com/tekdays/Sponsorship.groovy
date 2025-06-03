@@ -7,6 +7,8 @@ class Sponsorship {
     String description
     String notes
 
+
+
     String toString() {
         "${sponsor?.name}"
     }
