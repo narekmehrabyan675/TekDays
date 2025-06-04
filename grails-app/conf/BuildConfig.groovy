@@ -53,6 +53,16 @@ grails.project.dependency.resolution = {
         runtime 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
 
+/*
+        compile 'org.hibernate:hibernate-envers:4.3.11.Final'
+*/
+//        compile 'org.hibernate:hibernate-envers:4.3.11.Final'
+
+        compile('org.hibernate:hibernate-envers:4.3.11.Final') {
+            transitive = false
+        }
+
+
     }
 
     plugins {
@@ -77,8 +87,9 @@ grails.project.dependency.resolution = {
         compile ":jquery-ui:1.8.24"
         compile ":resources:1.2.14"
 
+        //compile 'org.hibernate:hibernate-envers:4.3.11.Final'
 
-        compile ":fields:1.3"
+//        compile ":fields:1.3"
 
 
 

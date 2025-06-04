@@ -1,7 +1,9 @@
 package com.tekdays
 
 import com.sun.org.apache.xpath.internal.operations.Bool
+import org.hibernate.envers.Audited
 
+@Audited
 class Task {
     String title
     String notes

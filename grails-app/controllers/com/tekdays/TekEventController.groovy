@@ -1,6 +1,7 @@
 package com.tekdays
 
-
+import org.hibernate.envers.query.AuditQuery
+import org.hibernate.envers.AuditReaderFactory
 
 import static org.springframework.http.HttpStatus.*
 import javax.servlet.http.HttpSession
@@ -185,6 +186,25 @@ class TekEventController {
         event.volunteers
         render"Thank you for Volunteering!"
     }
+
+
+    def sessionFactory // get current session
+
+    def revisions() {
+        def auditQueryCreator = AuditReaderFactory.get(sessionFactory.currentSession).createQuery()
+
+        def revisionList = []
+        AuditQuery query = auditQueryCreator.forRevisionsOfEntity(TekEvent.class, false, true)
+        query.resultList.each {
+            if(it[0].id==params.getLong('id')) {
+                revisionList.add(it)
+            }
+        }
+        [revisionList: revisionList]
+    }
+
+
+
 
     protected void notFound() {
         request.withFormat {

@@ -1,8 +1,15 @@
 package com.tekdays
 
+
 import javax.persistence.Transient
 import java.util.Date
+import org.hibernate.envers.Audited
+import org.hibernate.envers.NotAudited
 
+
+
+
+@Audited
 class TekEvent {
     //@Transient
     String city
@@ -14,6 +21,9 @@ class TekEvent {
     Date endDate
     String description
     static hasMany = [volunteers : TekUser , respondents : String , sponsorships: Sponsorship , tasks: Task , messages: TekMessage]
+
+
+
 
     String toString(){
         "$name, $city"

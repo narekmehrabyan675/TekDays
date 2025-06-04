@@ -26,8 +26,9 @@
         <input type="password" id="password" name="password" value="">
     </td>
         <td>
-            <input type="hidden" name="cName" value="${cName}">
-            <input type="hidden" name="aName" value="${aName}">
+
+            <input type="hidden" name="redirectUrl" value="${redirectUrl}">
+
         </td>
 
     </tr>

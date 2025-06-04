@@ -11,8 +11,12 @@ class GroovyFilters {
                 def allowedActions = ['show', 'index', 'login', 'validate' , 'search']
 
                 if (!session.user && !allowedActions.contains(actionName)){
+                    def fullUrl = request.forwardURI
+                    if (request.queryString) {
+                        fullUrl += "?" + request.queryString
+                    }
                     redirect(controller:'tekUser', action:'login',
-                            params:['cName': controllerName, 'aName':actionName])
+                            params: [redirectUrl: fullUrl])
 
                     return false
                 }

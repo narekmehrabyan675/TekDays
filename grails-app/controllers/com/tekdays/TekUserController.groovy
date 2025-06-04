@@ -103,16 +103,24 @@ class TekUserController {
     }
 
     def login() {
-        if (params.cName)
-            return [cName:params.cName, aName:params.aName]
+        if(params.redirectUrl){
+            return [redirectUrl: params.redirectUrl]
+        }
+
+
+        /*if (params.cName)
+            return [cName:params.cName, aName:params.aName]*/
     }
 
     def validate(){
         def user = TekUser.findByUserName(params.username)
         if(user && user.password == params.password){
             session.user = user
-            if(params.cName) {
-                redirect controller: params.cName, action: params.aName
+            if(params.redirectUrl || params.cName) {
+                def url = params.redirectUrl?.replace(request.contextPath, '')
+                redirect(uri: url)
+
+//                redirect controller: params.cName, action: params.aName
                 return
             }
 
