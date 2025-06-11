@@ -14,6 +14,11 @@ class TekUser {
 
     String toString(){fullName}
 
+   /* int compareTo(Object other) {
+        if (!(other instanceof TekUser)) return 0
+        return this.id <=> other.id
+    }*/
+
     static constraints = {
         fullName()
         userName()

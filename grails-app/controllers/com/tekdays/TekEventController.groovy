@@ -1,5 +1,7 @@
 package com.tekdays
 
+import org.codehaus.groovy.transform.trait.Traits
+import org.hibernate.StaleObjectStateException
 import org.hibernate.envers.query.AuditQuery
 import org.hibernate.envers.AuditReaderFactory
 
@@ -19,7 +21,23 @@ class TekEventController {
         respond TekEvent.list(params), model:[tekEventInstanceCount: TekEvent.count()]
     }
 //We can give as parameter id of object on database
+    @Transactional
     def show(TekEvent tekEventInstance) {
+
+        TekEvent.withNewTransaction {status ->
+            def albums = TekEvent.list()
+            albums.each {it.name = "MIlen"
+            it.save(flush: true)
+            }
+            if (true) {
+                status.setRollbackOnly()
+            }
+        }
+
+       /* def event = TekEvent.get(params.id)
+        event.setName("Changed")
+        event.save(flush: true)
+        TekEvent.findByName("Test123456")*/
         respond tekEventInstance
     }
 
@@ -46,8 +64,8 @@ class TekEventController {
                     sponsor: sponsor,
                     event: tekEventInstance,
                     contributionType: "Cash",
-                    description: "Auto-added",
-                    notes: ""
+                    description: "Without Save",
+                    notes: "Without Save"
             )
             tekEventInstance.addToSponsorships(sponsorship)
         }
@@ -55,13 +73,29 @@ class TekEventController {
         // Save event
         tekEventInstance.save flush: true
 
-        request.withFormat {
+        /*request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message',
                         args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
                 redirect tekEventInstance
             }
             '*' { respond tekEventInstance, [status: CREATED] }
+        }*/
+        if (tekEventInstance.save(flush: true)) {
+            // If save was successful, proceed with redirection/response.
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.created.message',
+                            args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+                    // Now tekEventInstance.id is guaranteed to be set, so redirection works.
+                    redirect tekEventInstance
+                }
+                '*' { respond tekEventInstance, [status: CREATED] }
+            }
+        } else {
+            // If save() failed (e.g., more validation errors surfaced after initial check, or database constraint violations),
+            // we can't redirect with an ID. Respond with errors and show the create view again.
+            respond tekEventInstance.errors, view:'create'
         }
     }
 
@@ -99,7 +133,8 @@ class TekEventController {
         }
     }*/
 
-    def edit(TekEvent tekEventInstance) {
+    def edit(Long id ){
+        def tekEventInstance = TekEvent.get(id)
         if (!tekEventInstance) {
             notFound()
             return
@@ -114,7 +149,8 @@ class TekEventController {
     }
 
     @Transactional
-    def update(TekEvent tekEventInstance) {
+    def update(Long id ,Long version){
+        TekEvent tekEventInstance = TekEvent.get(id)
         if (tekEventInstance == null) {
             notFound()
             return
@@ -132,6 +168,17 @@ class TekEventController {
 
         session.csrfToken = null
 
+        if (version != null && tekEventInstance.version > version) {
+            tekEventInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                    ["TekEvent"] as Object[], "Another user has updated this TekEvent while you were editing.")
+            flash.tekEventInstance = tekEventInstance
+            redirect(action: "edit", id: tekEventInstance.id)
+            return
+        }
+
+        tekEventInstance.properties = params
+
+
         if (tekEventInstance.hasErrors()) {
             respond tekEventInstance.errors, view:'edit'
             return
@@ -141,7 +188,15 @@ class TekEventController {
             tekEventInstance.volunteers.clear()
         }
 
-        tekEventInstance.save flush:true
+        try {
+            tekEventInstance.save flush:true
+        }catch (StaleObjectStateException e){
+            tekEventInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                    ["TekEvent"] as Object[], "Another user has updated this TekEvent while you were editing.")
+            render(view: "edit", model: [tekEventInstance: tekEventInstance ,csrfToken: csrfToken])
+            return
+        }
+
 
         request.withFormat {
             form multipartForm {

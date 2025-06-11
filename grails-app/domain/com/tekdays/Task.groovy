@@ -4,7 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool
 import org.hibernate.envers.Audited
 
 @Audited
-class Task {
+class Task implements Comparable {
     String title
     String notes
     TekUser assignedTo
@@ -18,5 +18,11 @@ class Task {
         dueDate nullable: true
         completed nullable: true
     }
+
+    int compareTo(Object other) {
+        if (!(other instanceof Task)) return 0
+        return this.title <=> other.title
+    }
+
     static belongsTo = TekEvent
 }

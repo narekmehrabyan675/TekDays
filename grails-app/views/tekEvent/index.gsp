@@ -3,8 +3,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'tekEvent.label', default: 'TekEvent')}" />
+
+
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -16,7 +20,7 @@
 			</ul>
 		</div>
 		<div id="list-tekEvent" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
+			<h1 style="margin:  0 !important"><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -41,7 +45,10 @@
 
 
 						<g:sortableColumn property="startDate" title="${message(code: 'tekEvent.startDate.label', default: 'Start Date')}" />
-					
+
+						<g:sortableColumn property="Revision" title="${message(code: 'tekEvent.startDate.label', default: 'Revision')}" />
+
+
 					</tr>
 				</thead>
 				<tbody>
@@ -66,7 +73,23 @@
 --}%
 
 						<td><g:formatDate date="${tekEventInstance.startDate}" /></td>
-					
+
+						%{--<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-id = "${tekEventInstance.id}">
+							Revision list
+						</button> </td>--}%
+
+						<td>
+							<button
+									type="button"
+									class="btn btn-primary openModalBtn"
+						data-toggle="modal"
+						data-target="#myModal"
+						data-id="${tekEventInstance.id}">
+						Revision list
+						</button>
+						</td>
+
+
 					</tr>
 				</g:each>
 				</tbody>
@@ -75,8 +98,69 @@
 				<g:paginate total="${tekEventInstanceCount ?: 0}" />
 			</div>
 
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog custom-size" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Search HQL</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+
+						<div class="modal-body" style="height: 600px; padding: 0;">
+							<iframe id="modalIframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+			<style>
+			.custom-size {
+				max-width: 95%;
+				width: 1000px;
+				height: 800px
+			}
+
+			.modal-body {
+				height: 800px !important;
+				padding: 0;
+			}
+			</style>
+
+
 
 		</div>
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script>
+		var currentId = null;
+
+		$('.openModalBtn').on('click', function () {
+			currentId = $(this).data('id'); // saving  id
+
+			$('#myModal').modal({
+				backdrop: false,
+				keyboard: true
+			});
+		});
+
+		$('#myModal').on('show.bs.modal', function () {
+			if (currentId !== null) {
+				const host = window.location.hostname;
+				//$('#modalIframe').attr('src', 'http://' + host + ':9090/TekDays/searchable/updatedHQL');
+				$('#modalIframe').attr('src', 'http://' + host + ':9090/TekDays/tekEvent/revisions/' + currentId);
+			}
+		});
+
+		$('#myModal').on('hidden.bs.modal', function () {
+			$('#modalIframe').attr('src', '');
+			currentId = null;
+		});
+	</script>
+
 
 
 

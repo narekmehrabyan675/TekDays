@@ -1,11 +1,11 @@
 package com.tekdays
 
+import org.apache.tools.ant.types.resources.Sort
 
 import javax.persistence.Transient
 import java.util.Date
 import org.hibernate.envers.Audited
 import org.hibernate.envers.NotAudited
-
 
 
 
@@ -20,6 +20,11 @@ class TekEvent {
     Date startDate
     Date endDate
     String description
+    //Long version
+/*
+    SortedSet volunteers
+*/
+    SortedSet tasks
     static hasMany = [volunteers : TekUser , respondents : String , sponsorships: Sponsorship , tasks: Task , messages: TekMessage]
 
 
@@ -40,7 +45,7 @@ class TekEvent {
     static constraints = {
         name(blank: false)
         name validator: {val , obj ->
-            if(val.contains("Narek")){
+            if(val.contains("Test")){
                 return 'username.no.Narek'
             }}
         city(blank:false)

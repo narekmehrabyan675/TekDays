@@ -13,8 +13,13 @@
 
 grails.config.locations = ["classpath:${appName}-config.properties",
                            "classpath:${appName}-config.groovy",
-                           "file:${userHome}/.grails/${appName}-config.properties",
-                           "file:${userHome}/.grails/${appName}-config.groovy"]
+                           "file:${userHome}/.grails/${appName}-config.properties"/*,
+                           "file:${userHome}/.grails/${appName}-config.groovy"*/]
+
+
+if (System.properties["tekdays.config.location"]) {
+    grails.config.locations << "file:" + System.properties["tekdays.config.location"]
+}
 
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination

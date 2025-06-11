@@ -16,7 +16,7 @@
 		<asset:javascript src="application.js"/>
 		<g:layoutHead/>
 	</head>
-	<body>
+	<body style="margin: auto !important;">
 %{--
 		<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>
 --}%
