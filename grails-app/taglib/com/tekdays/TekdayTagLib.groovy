@@ -33,6 +33,17 @@ class TekdayTagLib {
     }
 
 
+    def registrationLink = { attrs, body ->
+        if (!(request.getSession(false) && session.user)) {
+            out << "<span style='float:right; margin-right: 10px'>"
+            out << "<a href='${createLink(controller: 'registration', action: 'step1')}'>Register</a>"
+            out << "</span>"
+        }
+    }
+
+
+
+
     def loginToggle = {
         if (actionName == 'login') {
             return

@@ -87,6 +87,9 @@ grails.project.dependency.resolution = {
         compile ":jquery-ui:1.8.24"
         compile ":resources:1.2.14"
 
+
+
+
         //compile 'org.hibernate:hibernate-envers:4.3.11.Final'
 
 //        compile ":fields:1.3"

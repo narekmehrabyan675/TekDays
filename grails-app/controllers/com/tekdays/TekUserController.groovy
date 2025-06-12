@@ -130,6 +130,39 @@ class TekUserController {
             render view: 'login'
         }
     }
+
+    def registrationFlow = {
+        enterDetails {
+            on("next") {
+                flow.userInstance = new TekUser(params)
+                if (flow.userInstance.validate()) {
+                    return success()
+                } else {
+                    return error()
+                }
+            }.to "confirmDetails"
+            on("cancel").to "cancelled"
+        }
+
+        confirmDetails {
+            on("submit") {
+                flow.userInstance.save(flush:true)
+                return success()
+            }.to "finished"
+            on("back").to "enterDetails"
+        }
+
+        finished {
+            redirect(action: "login")  // или куда надо
+        }
+
+        cancelled {
+            redirect(action: "index")
+        }
+    }
+
+
+
     def logout = {
         session.user = null
         redirect(uri:'/')

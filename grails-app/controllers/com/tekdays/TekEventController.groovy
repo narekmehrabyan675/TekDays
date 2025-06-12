@@ -102,36 +102,6 @@ class TekEventController {
 
 
 
-    /*def edit(TekEvent tekEventInstance) {
-        respond tekEventInstance
-    }
-
-    @Transactional
-    def update(TekEvent tekEventInstance) {
-        if (tekEventInstance == null) {
-            notFound()
-            return
-        }
-
-        if (tekEventInstance.hasErrors()) {
-            respond tekEventInstance.errors, view:'edit'
-            return
-        }
-
-        if(params.volunteers==null ){
-            tekEventInstance.volunteers.clear()
-        }
-
-        tekEventInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'TekEvent.label', default: 'TekEvent'), tekEventInstance.id])
-                redirect tekEventInstance
-            }
-            '*'{ respond tekEventInstance, [status: OK] }
-        }
-    }*/
 
     def edit(Long id ){
         def tekEventInstance = TekEvent.get(id)
@@ -172,6 +142,10 @@ class TekEventController {
             tekEventInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                     ["TekEvent"] as Object[], "Another user has updated this TekEvent while you were editing.")
             flash.tekEventInstance = tekEventInstance
+            flash.message = message(code: "default.optimistic.locking.failure",
+                    args: ["TekEvent"],
+                    default: "Another user has updated this TekEvent while you were editing.")
+
             redirect(action: "edit", id: tekEventInstance.id)
             return
         }
@@ -183,10 +157,12 @@ class TekEventController {
             respond tekEventInstance.errors, view:'edit'
             return
         }
-
-        if(params.volunteers == null){
-            tekEventInstance.volunteers.clear()
+        tekEventInstance.volunteers.clear()
+        for(i in params.volunteers) {
+            def v = TekUser.get(i as Long)
+            tekEventInstance.addToVolunteers(v)
         }
+        tekEventInstance.merge(flush: true)
 
         try {
             tekEventInstance.save flush:true
