@@ -23,10 +23,14 @@ class RegistrationController {
             redirect(action: 'step1')
             return
         }
-
         requiredFields.each { field ->
             if (params[field]) {
                 session.registrationData[field] = params[field]
+            }
+        }
+        requiredFields.each { field ->
+            if (params[field]=="") {
+                session.registrationData[field] = ""
             }
         }
 
@@ -56,7 +60,7 @@ class RegistrationController {
         def user = new TekUser(session.registrationData)
         if (!user.save(flush: true)) {
             flash.message = "Something went wrong. Please correct your data."
-            redirect(action: 'step1')
+            render(view: 'step1', model: [userInstance: user])
             return
         }
 

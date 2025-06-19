@@ -9,6 +9,7 @@ class TekUser {
     String email
     String website
     String bio
+    Boolean activated = false
     //TekEvent event
 
 

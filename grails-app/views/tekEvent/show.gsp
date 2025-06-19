@@ -22,7 +22,12 @@
 		<a href="#show-tekEvent" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+				<g:set var="currentLang" value="${session.lang?.language}" />
+				<li>
+					<a class="home" href="${createLink(uri: '/', params: currentLang ? [lang: currentLang] : [:])}">
+						<g:message code="default.home.label"/>
+					</a>
+				</li>
 				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="list" controller="dashboard" action="dashboard" id="${tekEventInstance.id}"> Event Dashboard</g:link></li>
@@ -48,7 +53,6 @@
 					</span>
 
 						<span class="property-value" aria-labelledby="city-label">
-							<g:fieldValue bean="${tekEventInstance}" field="venue"/>,
 							<g:fieldValue bean="${tekEventInstance}" field="city"/></span>
 					
 				</li>

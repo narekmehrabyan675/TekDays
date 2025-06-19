@@ -1,38 +1,55 @@
 package com.tekdays
 
+import grails.converters.JSON
+import grails.converters.XML
 import org.codehaus.groovy.transform.trait.Traits
+import org.hibernate.HibernateException
 import org.hibernate.StaleObjectStateException
 import org.hibernate.envers.query.AuditQuery
 import org.hibernate.envers.AuditReaderFactory
 
 import static org.springframework.http.HttpStatus.*
-import javax.servlet.http.HttpSession
+//import grails.converters.deep.*
+
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class TekEventController {
 
+
     TaskService taskService
     EventService eventService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def allowedIps = ['195.250.67.234' , '127.0.0.1']
+
+
+
+
+    def beforeInterceptor = {
+        def clientIp = request.getRemoteAddr()
+        if ((!(clientIp in allowedIps) && actionName == 'updateAPI') || (!request.getHeader("Accept")?.contains("application/json") && actionName == 'updateAPI')) {
+            render status: 403, text: "Can access only via  API (JSON)"
+            return false
+        }
+    }
 
     def index(Integer max) {
+        println "Got param lang:"
         params.max = Math.min(max ?: 10, 100)
         respond TekEvent.list(params), model:[tekEventInstanceCount: TekEvent.count()]
     }
 //We can give as parameter id of object on database
     @Transactional
     def show(TekEvent tekEventInstance) {
-
-        TekEvent.withNewTransaction {status ->
+        /*TekEvent.withNewTransaction {status ->
             def albums = TekEvent.list()
-            albums.each {it.name = "MIlen"
+            albums.each {it.name = "Petros"
             it.save(flush: true)
             }
             if (true) {
                 status.setRollbackOnly()
             }
-        }
+        }*/
 
        /* def event = TekEvent.get(params.id)
         event.setName("Changed")
@@ -73,33 +90,15 @@ class TekEventController {
         // Save event
         tekEventInstance.save flush: true
 
-        /*request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message',
-                        args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
-                redirect tekEventInstance
-            }
-            '*' { respond tekEventInstance, [status: CREATED] }
-        }*/
-        if (tekEventInstance.save(flush: true)) {
-            // If save was successful, proceed with redirection/response.
-            request.withFormat {
-                form multipartForm {
-                    flash.message = message(code: 'default.created.message',
-                            args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
-                    // Now tekEventInstance.id is guaranteed to be set, so redirection works.
-                    redirect tekEventInstance
-                }
-                '*' { respond tekEventInstance, [status: CREATED] }
-            }
-        } else {
-            // If save() failed (e.g., more validation errors surfaced after initial check, or database constraint violations),
-            // we can't redirect with an ID. Respond with errors and show the create view again.
+
+        if (!tekEventInstance.save(flush: true)) {
             respond tekEventInstance.errors, view:'create'
+            return
         }
+
+        flash.message = message(code: 'default.created.message', args: [message(code: 'tekEvent.label', default: 'TekEvent'), tekEventInstance.id])
+        redirect tekEventInstance
     }
-
-
 
 
 
@@ -235,6 +234,34 @@ class TekEventController {
     }
 
 
+    def updateAPI(){
+        def tekEvent = TekEvent.get(params.id)
+
+        if (!tekEvent) {
+            render status: 404, text: "Event not found"
+            return
+        }
+
+        def json = request.JSON
+
+        tekEvent.properties = json
+        def messages = json.messages
+        if(!messages || messages == null){
+            tekEvent.messages = messages;
+        }
+
+
+        try {
+            if (tekEvent.save(flush: true)) {
+                render tekEvent as JSON
+            } else {
+                render status: 400, text: "Validation error: ${tekEvent.errors}"
+            }
+        } catch (Exception e) {
+            log.error("Update error", e)
+            render status: 500, text: "Server error"
+        }
+    }
 
 
     protected void notFound() {

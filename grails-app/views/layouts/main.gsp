@@ -15,20 +15,41 @@
   		<asset:stylesheet src="application.css"/>
 		<asset:javascript src="application.js"/>
 		<g:layoutHead/>
-	</head>
+		<%
+			if (!session.lang) {
+				session.lang = new Locale("en")
+			}
+		%>
+
+
+</head>
 	<body style="margin: auto !important;">
 %{--
 		<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>
 --}%
-	<div id="logo" role="banner"><a href="${createLink(uri: '/')}">
+<g:set var="currentLang" value="${session.lang?.language}" />
+
+	<div id="logo" role="banner"> <a href = "${createLink(uri: '/', params: currentLang ? [lang: currentLang] : [:])}"/>
 		<img src="${resource(dir: 'images', file: 'td_logo.png')}"
 			 alt="TekDays"
-			 style="width: 960px; height: auto;"/></a></div>
+			 style="width: 960px; height: auto;"/> </a> </div>
+	<g:if test="${session.user && !session.user.activated && !(controllerName == 'tekUser' && actionName == 'activationPage')}">
+		<g:activationButton />
+	</g:if>
+	<div class="language-switcher">
+		<a href="${request.forwardURI}?lang=en">English</a> |
+		<a href="${request.forwardURI}?lang=ru">Русский</a> |
+		<a href="${request.forwardURI}?lang=hy">Հայերեն</a>
+	</div>
+
 		<g:layoutBody/>
 		<g:loginToggle />
 	    <g:registrationLink />
 
-		<div class="footer" role="contentinfo"></div>
+
+
+
+	<div class="footer" role="contentinfo"></div>
 %{--		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>--}%
 	</body>
 </html>

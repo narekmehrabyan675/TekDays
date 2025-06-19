@@ -87,6 +87,7 @@ grails.project.dependency.resolution = {
         compile ":jquery-ui:1.8.24"
         compile ":resources:1.2.14"
 
+        compile 'org.grails.plugins:mail:1.0.7'
 
 
 

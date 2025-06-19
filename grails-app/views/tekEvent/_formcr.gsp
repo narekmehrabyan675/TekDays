@@ -1,24 +1,78 @@
 <%@ page import="com.tekdays.TekEvent" %>
+<style>
+ul.errors {
+    width: 300px;
+    font-size: 12px;
+    padding: 4px 8px;
+    background-color: #fee;
+    border: 1px solid #f88;
+    border-radius: 4px;
+}
+
+ul.errors li {
+    margin: 0;
+    padding: 2px 0;
+}
+</style>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'name', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'name', 'error')}">
     <label for="name">
         <g:message code="tekEvent.name.label" default="Name" />
-        <span class="required-indicator">*</span>
     </label>
-    <g:textField name="name" required="" value="${tekEventInstance?.name}"/>
 
+    <g:textField name="name" value="${tekEventInstance?.name}" />
+
+    <g:hasErrors bean="${tekEventInstance}" field="name">
+        <ul class="errors"
+            style="margin-top: 4px; margin-bottom: 0; font-size: 12px; background: #fee; border: 1px solid #f88; border-radius: 4px; padding: 4px 8px; display: inline-block;">
+            <g:eachError bean="${tekEventInstance}" field="name" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
+                    <g:message error="${error}" />
+                </li>
+            </g:eachError>
+        </ul>
+    </g:hasErrors>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'city', 'error')} required">
+
+
+%{--<div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'name', 'error')} --}%%{--required--}%%{--">
+    <label for="name">
+        <g:message code="tekEvent.name.label" default="Name" />
+      --}%%{--  <span class="required-indicator">*</span>--}%%{--
+    </label>
+    <g:textField name="name"  value="${tekEventInstance?.name}"/>
+    <div>
+    <g:hasErrors bean="${tekEventInstance}" field="name">
+        <ul class="errors" role="alert">
+            <g:eachError bean="${tekEventInstance}" field="name" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+            </g:eachError>
+        </ul>
+    </g:hasErrors>
+    </div>
+
+</div>--}%
+<div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'name', 'error')}">
     <label for="city">
-        <g:message code="tekEvent.city.label" default="City" />
-        <span class="required-indicator">*</span>
+        <g:message code="tekEvent.name.label" default="City" />
     </label>
-    <g:textField name="city" required="" value="${tekEventInstance?.city}"/>
 
+    <g:textField name="city" value="${tekEventInstance?.city}" />
+
+    <g:hasErrors bean="${tekEventInstance}" field="city">
+        <ul class="errors"
+            style="margin-top: 4px; margin-bottom: 0; font-size: 12px; background: #fee; border: 1px solid #f88; border-radius: 4px; padding: 4px 8px; display: inline-block;">
+            <g:eachError bean="${tekEventInstance}" field="city" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
+                    <g:message error="${error}" />
+                </li>
+            </g:eachError>
+        </ul>
+    </g:hasErrors>
 </div>
+
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'description', 'error')} ">
     <label for="description">

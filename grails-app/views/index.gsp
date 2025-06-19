@@ -22,12 +22,11 @@
 <div id="welcome">
     <br/>
 
-    <h3>Welcome to TekDays.com</h3>
+    <h3> <g:message code = "welcome.head"></g:message>  </h3>
 
-    <p>TekDays.com is a site dedicated to assisting individuals and
-    communities to organize technology conferences. To bring great
-    minds with common interests and passions together for the good
-    of greater geekdom!</p>
+    <p style="margin-top: 20px">
+        <g:message code="welcome.title1"></g:message>
+    </p>
 </div>
 
 %{--<div id="homeSearch">
@@ -39,7 +38,7 @@
 </div>--}%
 
 <button type="button" class="btn btn-primary openModalBtn" data-toggle="modal" data-target="#myModal">
-    Search1
+    <g:message code="button.search"></g:message>
 </button>
 <!-- Modal view page-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -74,37 +73,32 @@
     <g:organizerEvents/>
 <g:volunteerEvents/>
 <div class="homeCell">
-    <h3>Find a Tek Event</h3>
+    <h3><g:message code="welcome.title7"></g:message> </h3>
 
-    <p>See if there's a technical event in the works that strikes your
-    fancy. If there is, you can volunteer to help or just let the
-    organizers know that you'd be interested in attending.
-    Everybody has a role to play.</p>
+    <p>        <g:message code="welcome.title2"></g:message>
+    </p>
     <span class="buttons">
-        <g:link controller="tekEvent" action="index">Find a Tek Event</g:link>
+        <g:link controller="tekEvent" action="index"><g:message code="welcome.title7"/></g:link>
     </span>
 </div>
 
 <div class="homeCell">
-    <h3>Organize a Tek Event</h3>
+    <h3> <g:message code="welcome.title8"/></h3>
 
-    <p>If you don't see anything that suits your interest and location,
-    then why not get the ball rolling. It's easy to get started and
-    there may be others out there ready to get behind you to make it
-    happen.</p>
+    <p>        <g:message code="welcome.title3"/>
+    </p>
     <span class="buttons">
-        <g:link controller="tekEvent" action="create">Organize a Tek Event</g:link>
+        <g:link controller="tekEvent" action="create"><g:message code="welcome.title8"/></g:link>
     </span>
 </div>
 
 <div class="homeCell">
-    <h3>Sponsor a Tek Event</h3>
+    <h3><g:message code="welcome.title9"></g:message> </h3>
 
-    <p>If you are part of a business or organization that is involved in
-    technology then sponsoring a tek event would be a great way to
-    let the community know that you're there and you're involved.</p>
+    <p>        <g:message code="welcome.title4"></g:message>
+   </p>
     <span class="buttons">
-        <g:link controller="sponsor" action="create">Sponsor a Tek Event</g:link>
+        <g:link controller="sponsor" action="create"><g:message code="welcome.title9"></g:message> </g:link>
     </span>
 </div>
 </div>

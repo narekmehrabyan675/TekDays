@@ -21,6 +21,11 @@
     <g:if test="${flash.message}">
         <div class="error">${flash.message}</div>
     </g:if>
+    <g:hasErrors bean="${userInstance}">
+        <div class="errors">
+            <g:renderErrors bean="${userInstance}" as="list"/>
+        </div>
+    </g:hasErrors>
 </div>
 
 <div class="container">

@@ -43,11 +43,18 @@ class TekEvent {
         volunteers cascade: 'save-update'
     }
     static constraints = {
-        name(blank: false)
-        name validator: {val , obj ->
+        /*name(blank: false , nullable: false , blankMessage: 'tekEvent.name.blank' , nullableMessage: 'tekEvent.name.null')
+        name validator: { val, obj ->
+            if (!val) return ['tekEvent.name.null']
+        }*/
+
+            name blank: false, nullable: false
+
+
+        /*name validator: {val , obj ->
             if(val.contains("Test")){
                 return 'username.no.Narek'
-            }}
+            }}*/
         city(blank:false)
         description(blank: true, nullable: true , maxSize: 500)
         respondents nullable: true , blank:true

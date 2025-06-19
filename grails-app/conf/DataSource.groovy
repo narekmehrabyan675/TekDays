@@ -74,7 +74,7 @@ environments {
     }
 }
 */
-dataSource {
+/*dataSource {
     pooled = true
     jmxExport = true
     driverClassName = "org.mariadb.jdbc.Driver"
@@ -82,7 +82,7 @@ dataSource {
     username = "tekuser"
     password = "tekpass"
     dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-}
+}*/
 
 hibernate {
     cache.use_second_level_cache = true

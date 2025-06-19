@@ -2,24 +2,22 @@
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
 
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
+grails.config.locations = [
+        "classpath:${appName}-config.properties",
+        "classpath:${appName}-config.groovy",
+        "file:${userHome}/.grails/${appName}-config.properties",
+        "file:${userHome}/.grails/${appName}-config.groovy"
+]
 
-// if (System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-// }
-
-grails.config.locations = ["classpath:${appName}-config.properties",
-                           "classpath:${appName}-config.groovy",
-                           "file:${userHome}/.grails/${appName}-config.properties"/*,
-                           "file:${userHome}/.grails/${appName}-config.groovy"*/]
-
-
-if (System.properties["tekdays.config.location"]) {
-    grails.config.locations << "file:" + System.properties["tekdays.config.location"]
+if (System.properties["${appName}.config.location"]) {
+    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 }
+
+println "Loaded config from: ${grails.config.locations}"
+
+
+println "Loaded config from: ${grails.config.locations}"
+println "Database URL: ${grailsApplication.config.dataSource.url}"
 
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
@@ -95,6 +93,10 @@ grails.hibernate.cache.queries = false
 grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
+
+
+grails.web.servlet.LocaleResolver = SessionLocaleResolver
+
 
 environments {
     development {

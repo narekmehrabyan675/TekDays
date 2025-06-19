@@ -36,7 +36,7 @@ class TekdayTagLib {
     def registrationLink = { attrs, body ->
         if (!(request.getSession(false) && session.user)) {
             out << "<span style='float:right; margin-right: 10px'>"
-            out << "<a href='${createLink(controller: 'registration', action: 'step1')}'>Register</a>"
+            out << "<a href='${createLink(controller: 'registration', action: 'step1')}'>${message(code: 'welcome.title10')}</a>"
             out << "</span>"
         }
     }
@@ -51,14 +51,15 @@ class TekdayTagLib {
         out << "<div style='margin: 15px 0 40px;'>"
         if (request.getSession(false) && session.user) {
             out << "<span style='float:left; margin-left: 15px'>"
-            out << "Welcome ${session.user}."
+            out << "${message(code: 'welcome.welc')}"
+            out << " ${session.user}."
             out << "</span><span style='float:right;margin-right:15px'>"
             out << "<a href='${createLink(controller: 'tekUser', action: 'logout')}'>"
-            out << "Logout </a></span>"
+            out << "${message(code: 'welcome.title11')} </a></span>"
         } else {
             out << "<span style='float:right;margin-right:10px'>"
             out << "<a href='${createLink(controller: 'tekUser', action: 'login')}'>"
-            out << "Login </a></span>"
+            out << "${message(code: 'welcome.title12')} </a></span>"
         }
         out << "</div><br/>"
     }
@@ -68,7 +69,7 @@ class TekdayTagLib {
             def userEvents = TekEvent.findAllByOrganizer(session.user)
             if(userEvents){
                 out << "<div style='margin-left:25px; margin-top:25px; width:85%'>"
-                out << "<h3>Events you are organizing:</h3>"
+                out << "<h3>${message(code: 'welcome.title5')}</h3>"
                 out << "<ol>"
                 userEvents.each{
                     out << "<li><a href = '"
@@ -93,7 +94,7 @@ class TekdayTagLib {
             }
             if (events){
                 out << "<div style='margin-left:25px; margin-top:25px; width:85%'>"
-                out << "<h3>Events you volunteered for:</h3>"
+                out << "<h3>${message(code: 'welcome.title6')}</h3>"
                 out << "<ul>"
                 events.each{
                     out << "<li><a href='"
@@ -119,5 +120,16 @@ class TekdayTagLib {
             }
         }
     }
+    def activationButton = { attrs, body ->
+        def user = attrs.user ?: session.user
+        if (user && user.activated == false) {
+            out << """
+                <form action="${createLink(controller: 'tekUser', action: 'activationPage')}" style="float:right" method="get">
+                    <button type="submit" class="btn btn-warning">Activate Account</button>
+                </form>
+            """
+        }
+    }
+
 
 }

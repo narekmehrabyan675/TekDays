@@ -60,6 +60,6 @@
     </tfoot>
 </table>
 
-<r:layoutResources name="defer"/> <!-- обязательно вставить перед </body> -->
+<r:layoutResources name="defer"/>
 </body>
 </html>
