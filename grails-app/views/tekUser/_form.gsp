@@ -7,7 +7,7 @@
 		<g:message code="tekUser.fullName.label" default="Full Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="fullName" required="" value="${tekUserInstance?.fullName}" oninvalid="this.setCustomValidity('${message(code:  'tekUser.fullName.label')}')" />
+	<g:textField name="fullName" required="" value="${tekUserInstance?.fullName}"  />
 
 </div>
 

@@ -48,12 +48,9 @@
 %{--
 					<span id="city-label" class="property-label"><g:message code="tekEvent.city.label" default="City" /></span>
 --}%
-					<span id="city-label" class="property-label">
-						Location
-					</span>
+					<span id="description-label" class="property-label"><g:message code="tekEvent.city.label" default="City" /></span>
 
-						<span class="property-value" aria-labelledby="city-label">
-							<g:fieldValue bean="${tekEventInstance}" field="city"/></span>
+					<span class="property-value" aria-labelledby="description-label"><g:fieldValue bean="${tekEventInstance}" field="city"/></span>
 					
 				</li>
 				</g:if>

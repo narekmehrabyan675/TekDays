@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<div style="left: 50%; top:50%">
+<div style=" margin: 0 20px 0 20px">
 <div id="welcome">
     <br/>
 

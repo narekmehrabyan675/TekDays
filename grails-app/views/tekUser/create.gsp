@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'tekUser.label', default: 'TekUser')}" />
+		<g:set var="entityName" value="${message(code: 'com.tekdays.tekUser.label', default: 'TekUser')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>

@@ -31,13 +31,13 @@
 <table id="revisionTable" class="display">
     <thead>
     <tr>
-        <th>Revision #</th>
-        <th>Date</th>
-        <th>Changed By</th>
-        <th>Event Title</th>
-        <th>City</th>
-        <th>Description</th>
-        <th>Venue</th>
+        <th><g:message code="tekEvent.revision.label" default="Description"/> #</th>
+        <th><g:message code="tekEvent.date.label" default="Date"/></th>
+        <th><g:message code="tekEvent.changedby.label" default="Changed By"/></th>
+        <th><g:message code="tekEvent.eventtitle.label" default="Event Title"/></th>
+        <th><g:message code="tekEvent.city.label" default="City"/></th>
+        <th><g:message code="tekEvent.description.label" default="Description"/></th>
+        <th><g:message code="tekEvent.venue.label" default="Venue"/></th>
 
     </tr>
     </thead>
@@ -56,7 +56,7 @@
     </tbody>
 </table>
 
-<r:layoutResources name="defer"/> <!-- обязательно вставить перед </body> -->
+<r:layoutResources name="defer"/>
 </body>
 </html>
 

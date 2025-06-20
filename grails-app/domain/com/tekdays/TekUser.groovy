@@ -21,11 +21,20 @@ class TekUser {
     }*/
 
     static constraints = {
-        fullName()
-        userName()
-        email()
-        website()
-        bio maxSize: 5000
+        fullName blank: false , nullable: false
+        userName blank: false , nullable: false
+        email blank: false , nullable: false , email: true
+        website url: true , blank: true , nullable: true
+        bio maxSize: 5000 , blank: true , nullable: true
+        password blank: false , nullable: false , validator: { val, obj ->
+            if (!val) return 'password.blank'
+            if (val.size() < 8) return 'password.tooShort'
+            if (!val.matches(".*[A-Z].*")) return 'password.noUppercase'
+            if (!val.matches(".*[a-z].*")) return 'password.noLowercase'
+            if (!val.matches(".*\\d.*")) return 'password.noDigit'
+            if (!val.matches(".*[!@#\$%^&*()].*")) return 'password.noSymbol'
+            return true
+        }
     }
     //Gna tes um es kcvac
     //static belongsTo = [event : TekEvent]

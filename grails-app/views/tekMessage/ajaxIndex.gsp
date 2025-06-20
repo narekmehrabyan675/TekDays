@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+%{--
     <g:javascript library="jquery" />
+--}%
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'tekMessage.label',
             default: 'TekMessage')}" />

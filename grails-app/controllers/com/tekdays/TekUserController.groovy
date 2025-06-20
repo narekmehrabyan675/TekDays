@@ -15,12 +15,9 @@ class TekUserController {
 
     EmailService emailService
 
-
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond TekUser.list(params), model:[tekUserInstanceCount: TekUser.count()]
-
-
     }
 
     def show(TekUser tekUserInstance) {
@@ -162,7 +159,8 @@ class TekUserController {
         String subj = "Activation code"
         String massage = "Dear ${session.user.userName} your activation code is ${activationCode.code.toString()}."
 
-        //emailService.sendTestEmail(mailOfUser , subj , massage)
+        emailService.sendTestEmail(mailOfUser , subj , massage)
+
         flash.message = "Code sent to email ${tekUser.email}"
 
         if(params.redirectUrl){
@@ -188,7 +186,10 @@ class TekUserController {
         }
         def updateduser = TekUser.get(tekUser.id as Long)
         updateduser.activated = true
-        updateduser.save(flush: true)
+        if(!updateduser.save(flush: true ,validate: false)){
+            println("Don't saved!")
+            return
+        }
         codeEntry.delete(flush: true)
 
         session.user = updateduser

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6eee4962-1a9c-402c-bfca-513549ce4f64">
+    <property name="ireport.zoom" value="1.0"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+    <style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+    <style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+    <style name="Detail" fontName="Arial" fontSize="12"/>
+    <parameter name="userId" class="java.lang.String"/>
+    <queryString language="SQL">
+        <![CDATA[SELECT
+     tek_user.`id` AS tek_user_id,
+     tek_user.`version` AS tek_user_version,
+     tek_user.`bio` AS tek_user_bio,
+     tek_user.`email` AS tek_user_email,
+     tek_user.`full_name` AS tek_user_full_name,
+     tek_user.`password` AS tek_user_password,
+     tek_user.`user_name` AS tek_user_user_name,
+     tek_user.`website` AS tek_user_website,
+     tek_user.`activated` AS tek_user_activated
+FROM
+     `tek_user` tek_user
+WHERE tek_user.id = $P{userId}]]>
+    </queryString>
+    <field name="tek_user_id" class="java.lang.Long"/>
+    <field name="tek_user_full_name" class="java.lang.String"/>
+    <field name="tek_user_user_name" class="java.lang.String"/>
+    <field name="tek_user_password" class="java.lang.String"/>
+    <field name="tek_user_email" class="java.lang.String"/>
+    <field name="tek_user_activated" class="java.lang.Boolean"/>
+    <field name="tek_user_website" class="java.lang.String"/>
+    <field name="tek_user_bio" class="java.lang.String"/>
+    <group name="tek_user_id">
+        <groupExpression><![CDATA[$F{tek_user_id}]]></groupExpression>
+        <groupHeader>
+            <band height="3"/>
+        </groupHeader>
+        <groupFooter>
+            <band height="6"/>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="201" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="57" width="79" height="24" uuid="cbed58f3-bc6b-4a08-9c35-0bff745946ff"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[UserName	]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="82" width="79" height="26" uuid="8818b2a3-7836-40f4-9d4e-12125ca894b4"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[Password]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="128" width="79" height="20" uuid="1bc94caf-7057-4188-aba2-a37fc2701102"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[activated]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="37" width="79" height="20" uuid="8fd61d92-34df-4865-a1ca-a7c59c816a03"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[FullName]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="151" width="79" height="20" uuid="bb09bb94-d674-47d9-b902-8b0c16b21354"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[Website]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="174" width="79" height="20" uuid="6695ef13-8467-4876-8447-33319baec1f4"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[Bio]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="105" width="79" height="20" uuid="4f152c47-73f1-4a7d-90d1-16811a2bd545"/>
+                <textElement>
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[Email]]></text>
+            </staticText>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="39" width="328" height="20" uuid="f3ce16fb-32df-44a8-a064-a9be34f55692"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_full_name}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="61" width="328" height="20" uuid="be7de4da-d7f5-48f9-aa61-ad55769b2e6b"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_user_name}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="82" width="328" height="20" uuid="59e1481d-fd1f-4705-a1ac-4ad6dcc69449"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_password}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="105" width="327" height="20" uuid="405736e0-09b1-40e6-8f06-6176f9eee23f"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_email}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="128" width="327" height="20" uuid="80cdbc39-300d-4b8e-a5cc-48de81258159"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_activated}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="151" width="327" height="20" uuid="f162bf70-375d-4de9-b9ef-a0f97490cf5a"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_website}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement style="Detail" positionType="Float" x="93" y="174" width="327" height="20" uuid="8366371c-1009-4cad-b837-5088224ca712"/>
+                <textElement>
+                    <font fontName="DejaVu Sans"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tek_user_bio}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="4" width="173" height="24" uuid="e7c282ff-033d-4d74-8f98-09a9fef41fe3"/>
+                <textElement>
+                    <font size="15"/>
+                </textElement>
+                <text><![CDATA[Information of User]]></text>
+            </staticText>
+        </band>
+    </title>
+    <pageHeader>
+        <band splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band splitType="Stretch"/>
+    </columnHeader>
+    <detail>
+        <band height="24" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="30f5418d-65fc-4158-860e-83f4a5820c49"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="44" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="e294beae-0539-49f1-ae84-8a42dd287a9e"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="20" splitType="Stretch"/>
+    </pageFooter>
+    <summary>
+        <band splitType="Stretch"/>
+    </summary>
+</jasperReport>

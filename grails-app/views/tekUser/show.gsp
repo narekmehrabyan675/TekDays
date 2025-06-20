@@ -9,7 +9,17 @@
 	</head>
 	<body>
 		<a href="#show-tekUser" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
+	<div style="float: right;margin-right:10px;margin-top:3px;">
+	<g:jasperReport
+			jasper="reportuser"
+			format="PDF,XLS"
+			description="Download User"
+			name="petros">
+		<input type="hidden" name="userId" value=${tekUserInstance?.id}  />
+	</g:jasperReport>
+	</div>
+	<div class="nav" role="navigation">
+
 			<ul>
 				<g:set var="currentLang" value="${session.lang?.language}" />
 				<li>

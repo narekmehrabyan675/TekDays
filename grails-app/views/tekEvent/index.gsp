@@ -28,7 +28,7 @@
 
 		</div>
 		<div id="list-tekEvent" class="content scaffold-list" role="main">
-			<h1 style="margin:  0 !important"><g:message code="default.list.label" args="[entityName]" /></h1>
+			<h1 style="margin:   8px 0  15px 0 !important"><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -54,7 +54,7 @@
 
 						<g:sortableColumn property="startDate" title="${message(code: 'tekEvent.startDate.label', default: 'Start Date')}" />
 
-						<g:sortableColumn property="Revision" title="${message(code: 'tekEvent.startDate.label', default: 'Revision')}" />
+						<g:sortableColumn property="Revision" title="${message(code: 'tekEvent.revision.label', default: 'Revision')}" />
 
 
 					</tr>
@@ -93,7 +93,7 @@
 						data-toggle="modal"
 						data-target="#myModal"
 						data-id="${tekEventInstance.id}">
-						Revision list
+								${message(code: 'tekEvent.revision.button', default: 'Revision')}
 						</button>
 						</td>
 

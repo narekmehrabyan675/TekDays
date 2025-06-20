@@ -83,13 +83,7 @@ ul.errors li {
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'respondents', 'error')} ">
-    <label for="respondents">
-        <g:message code="tekEvent.respondents.label" default="Respondents" />
-
-    </label>
-
-
+<div >
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'volunteers', 'error')} ">
@@ -137,7 +131,7 @@ ul.errors li {
             <li><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
         </g:each>
         <li class="add">
-            <g:link controller="task" action="create" params="['tekEvent.id': tekEventInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'task.label', default: 'Task')])}</g:link>
+            <g:link controller="task" action="create" params="['tekEvent.id': tekEventInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'tekEvent.tasks.label', default: 'Task')])}</g:link>
         </li>
     </ul>
 
@@ -159,7 +153,7 @@ ul.errors li {
         <li class="add">
             <g:link controller="tekMessage" action="create"
                     params="['tekEvent.id': tekEventInstance?.id]">
-                ${message(code: 'default.add.label', args: [message(code: 'tekMessage.label', default: 'TekMessage')])}</g:link>
+                ${message(code: 'default.add.label', args: [message(code: 'tekEvent.messages.label1', default: 'TekMessage')])}</g:link>
         </li>
     </ul>
 
@@ -200,5 +194,15 @@ ul.errors li {
     </label>
     <g:textField name="venue" required="" value="${tekEventInstance?.venue}"/>
 
+    <g:hasErrors bean="${tekEventInstance}" field="venue">
+        <ul class="errors"
+            style="margin-top: 4px; margin-bottom: 0; font-size: 12px; background: #fee; border: 1px solid #f88; border-radius: 4px; padding: 4px 8px; display: inline-block;">
+            <g:eachError bean="${tekEventInstance}" field="venue" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
+                    <g:message error="${error}" />
+                </li>
+            </g:eachError>
+        </ul>
+    </g:hasErrors>
 </div>
 

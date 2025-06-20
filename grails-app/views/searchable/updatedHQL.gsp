@@ -45,9 +45,9 @@
 <table class="display compact" id="dt">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Pleace</th>
-        <th>Description</th>
+        <th><g:message code="tekEvent.name.label" default="Name" /></th>
+        <th><g:message code="tekEvent.city.label" default="City" /></th>
+        <th><g:message code="tekEvent.description.label" default="Description"/></th>
         <th>Link to edit</th>
     </tr>
     </thead>
