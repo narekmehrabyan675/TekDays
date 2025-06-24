@@ -56,9 +56,9 @@
 
 						<g:sortableColumn property="email" title="${message(code: 'tekUser.email.label', default: 'Email')}" />
 
-%{--
 						<g:sortableColumn property="website" title="${message(code: 'tekUser.website.label', default: 'Website')}" />
---}%
+
+
 
 						<g:sortableColumn property="bio" title="${message(code: 'tekUser.bio.label', default: 'Bio')}" />
 
@@ -76,9 +76,10 @@
 
 						<td style="width: 200px">${fieldValue(bean: tekUserInstance, field: "email")}</td>
 
-						%{--<td style=" ">	<div class="break-word" style="width: 80px;">
+<td style=" ">	<div class="break-word" style="width: 80px;">
 							${fieldValue(bean: tekUserInstance, field: "website")}
-						</div></td>--}%
+						</div></td>
+
 
 						<td style="width: 200px">${fieldValue(bean: tekUserInstance, field: "bio")}</td>
 
@@ -95,3 +96,4 @@
 
 	</body>
 </html>
+

@@ -133,8 +133,6 @@ class TekEventController {
             render status: 403, text: 'CSRF token validation failed'
             return
         }
-
-
         session.csrfToken = null
 
         if (version != null && tekEventInstance.version > version) {
@@ -150,7 +148,6 @@ class TekEventController {
         }
 
         tekEventInstance.properties = params
-
 
         if (tekEventInstance.hasErrors()) {
             respond tekEventInstance.errors, view:'edit'
@@ -171,7 +168,6 @@ class TekEventController {
             render(view: "edit", model: [tekEventInstance: tekEventInstance ,csrfToken: csrfToken])
             return
         }
-
 
         request.withFormat {
             form multipartForm {

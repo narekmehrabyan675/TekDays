@@ -1,8 +1,11 @@
 import com.tekdays.*
 
+
 class BootStrap {
 
     def init = { servletContext ->
+        /*servletContext.addListener(new ChatroomEndpoint())
+        println "Listener registered"*/
         /*new TekUser(fullName: 'John Doe',
                 userName: 'jdoe',
                 password: 't0ps3cr3t',

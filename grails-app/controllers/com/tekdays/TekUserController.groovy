@@ -28,6 +28,10 @@ class TekUserController {
         respond new TekUser(params)
     }
 
+    def chat(){
+
+    }
+
     @Transactional
     def save(TekUser tekUserInstance) {
         if (tekUserInstance == null) {

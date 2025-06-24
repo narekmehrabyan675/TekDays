@@ -5,7 +5,8 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="Grails"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,8 +41,9 @@
 		<a href="${request.forwardURI}?lang=en">English</a> |
 		<a href="${request.forwardURI}?lang=ru">Русский</a> |
 		<a href="${request.forwardURI}?lang=hy">Հայերեն</a>
-	</div>
 
+		<div style="float: right ; margin-right: 3px  "><g:chatButton/></div>
+	</div>
 		<g:layoutBody/>
 		<g:loginToggle />
 	    <g:registrationLink />

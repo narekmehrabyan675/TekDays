@@ -56,6 +56,16 @@ grails.project.dependency.resolution = {
             transitive = false
         }
 
+        bundle('javax.websocket:javax.websocket-api:1.1') {
+            // This line is necessary for deployment to Tomcat, since
+            // Tomcat comes with its own version of javax.websocket-api.
+            export = false
+        }
+        compile 'javax.websocket:javax.websocket-api:1.1'
+
+
+
+
         compile('commons-collections:commons-collections:3.2.1')
 
         runtime('commons-beanutils:commons-beanutils:1.9.4')

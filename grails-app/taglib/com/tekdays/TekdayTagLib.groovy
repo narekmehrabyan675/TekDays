@@ -131,5 +131,20 @@ class TekdayTagLib {
         }
     }
 
+    def chatButton = {
+        if (actionName == 'chat') {
+            return
+        }
+        if (request.getSession(false) && session.user) {
+            /*out << "<span>"
+            out << "</span>"*/
+            out << "<a href='${createLink(controller: 'tekUser', action: 'chat')}'>"
+            out << "${message(code: 'chat')} </a></span>"
+
+        }
+        out << "</div><br/>"
+    }
+
+
 
 }

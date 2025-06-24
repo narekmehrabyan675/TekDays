@@ -1,6 +1,8 @@
 package com.tekdays
 import org.hibernate.envers.Audited
 
+import javax.transaction.Transactional
+
 @Audited
 class TekUser {
     String fullName
@@ -35,6 +37,10 @@ class TekUser {
             if (!val.matches(".*[!@#\$%^&*()].*")) return 'password.noSymbol'
             return true
         }
+    }
+
+    static TekUser lookupByUsername(String username) {
+        return TekUser.findByUserName(username)
     }
     //Gna tes um es kcvac
     //static belongsTo = [event : TekEvent]
