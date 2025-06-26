@@ -1,6 +1,6 @@
 package com.tekdays
 
-
+import grails.transaction.NotTransactional
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -14,7 +14,7 @@ class SponsorController {
         params.max = Math.min(max ?: 10, 100)
         respond Sponsor.list(params), model:[sponsorInstanceCount: Sponsor.count()]
     }
-
+    @NotTransactional
     def show(Sponsor sponsorInstance) {
         respond sponsorInstance
     }

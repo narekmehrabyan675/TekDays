@@ -1,30 +1,27 @@
 package com.tekdays
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import org.apache.tools.ant.types.resources.Sort
 
 import javax.persistence.Transient
 import java.util.Date
 import org.hibernate.envers.Audited
-import org.hibernate.envers.NotAudited
 
 
 
 @Audited
 class TekEvent {
-    //@Transient
     String city
     String name
-    //String organizer//will be TekUser
     TekUser organizer
     String venue
     Date startDate
     Date endDate
     String description
-    //Long version
-/*
-    SortedSet volunteers
-*/
     SortedSet tasks
+    String lockedBy
+    Boolean locked = false
+    Date lockedAt = new Date()
     static hasMany = [volunteers : TekUser , respondents : String , sponsorships: Sponsorship , tasks: Task , messages: TekMessage]
 
 
@@ -43,18 +40,8 @@ class TekEvent {
         volunteers cascade: 'save-update'
     }
     static constraints = {
-        /*name(blank: false , nullable: false , blankMessage: 'tekEvent.name.blank' , nullableMessage: 'tekEvent.name.null')
-        name validator: { val, obj ->
-            if (!val) return ['tekEvent.name.null']
-        }*/
 
-            name blank: false, nullable: false
-
-
-        /*name validator: {val , obj ->
-            if(val.contains("Test")){
-                return 'username.no.Narek'
-            }}*/
+        name blank: false, nullable: false
         city(blank:false)
         description(blank: true, nullable: true , maxSize: 500)
         respondents nullable: true , blank:true

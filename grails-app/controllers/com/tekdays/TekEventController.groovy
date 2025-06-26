@@ -41,20 +41,6 @@ class TekEventController {
 //We can give as parameter id of object on database
     @Transactional
     def show(TekEvent tekEventInstance) {
-        /*TekEvent.withNewTransaction {status ->
-            def albums = TekEvent.list()
-            albums.each {it.name = "Petros"
-            it.save(flush: true)
-            }
-            if (true) {
-                status.setRollbackOnly()
-            }
-        }*/
-
-       /* def event = TekEvent.get(params.id)
-        event.setName("Changed")
-        event.save(flush: true)
-        TekEvent.findByName("Test123456")*/
         respond tekEventInstance
     }
 
@@ -104,6 +90,27 @@ class TekEventController {
 
     def edit(Long id ){
         def tekEventInstance = TekEvent.get(id)
+
+        def userName = session.user?.userName
+        def lockTimeoutMinutes = 5
+
+        if(tekEventInstance.locked && tekEventInstance.lockedBy != userName){
+            if (tekEventInstance.lockedAt?.before(new Date() - lockTimeoutMinutes.minutes)){
+                tekEventInstance.lockedBy = null
+                tekEventInstance.lockedAt = null
+                tekEventInstance.locked = false
+            }else{
+                flash.message = "This event is being edited by ${tekEventInstance.lockedBy} , please wait!"
+                redirect(action: 'show', id: id)
+                return
+            }
+        }
+        tekEventInstance.lockedAt = new Date()
+        tekEventInstance.locked = true
+        tekEventInstance.lockedBy = userName
+        tekEventInstance.save(flush: true)
+
+
         if (!tekEventInstance) {
             notFound()
             return
@@ -161,6 +168,8 @@ class TekEventController {
         tekEventInstance.merge(flush: true)
 
         try {
+            tekEventInstance.locked = false
+            tekEventInstance.lockedBy = null
             tekEventInstance.save flush:true
         }catch (StaleObjectStateException e){
             tekEventInstance.errors.rejectValue("version", "default.optimistic.locking.failure",

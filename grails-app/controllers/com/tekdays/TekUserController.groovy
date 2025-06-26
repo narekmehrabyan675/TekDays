@@ -1,6 +1,7 @@
 package com.tekdays
 
 import grails.converters.JSON
+import org.springframework.transaction.annotation.Propagation
 
 import java.time.Duration
 import java.time.Instant
@@ -15,6 +16,7 @@ class TekUserController {
 
     EmailService emailService
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond TekUser.list(params), model:[tekUserInstanceCount: TekUser.count()]
@@ -29,7 +31,8 @@ class TekUserController {
     }
 
     def chat(){
-
+        def tekUserInstanceList = TekUser.findAll()
+        render(view: "chat" , model:  [tekUserInstanceList : tekUserInstanceList])
     }
 
     @Transactional

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'book.label', default: 'Book')}" />
+    <g:set var="entityName" value="${message(code: 'tekEvent.label', default: 'Events')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
     <g:javascript>
 
@@ -54,13 +54,14 @@
     <tbody></tbody>
     <tfoot>
     <tr>
-        <th>field1</th>
-        <th>...</th>
-        <th>fieldn</th>
+        <th>Name</th>
+        <th>Pleace</th>
+        <th>Description</th>
+        <th>Link to edit</th>
     </tr>
     </tfoot>
 </table>
 
-<r:layoutResources name="defer"/> <!-- обязательно вставить перед </body> -->
+<r:layoutResources name="defer"/>
 </body>
 </html>

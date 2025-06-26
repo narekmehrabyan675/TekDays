@@ -6,9 +6,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.plugins.support.aware.GrailsApplicationAware
 import org.hibernate.criterion.CriteriaSpecification
 
-/*
 @Transactional
-*/
 class EventService implements GrailsApplicationAware{
     GrailsApplication grailsApplication
 
@@ -194,8 +192,6 @@ class EventService implements GrailsApplicationAware{
         ]
 
         return result as JSON
-
-        //return  results
 
     }
 

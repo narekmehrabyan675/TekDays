@@ -13,7 +13,7 @@ class GroovyFilters {
 
                 def publicActions = ['login', 'validate', 'index', 'show', 'search',
                                      'step1', 'step2', 'step3', 'complete',
-                                     'updateAPI', 'changeLocale']
+                                     'updateAPI', 'changeLocale' , 'updateAPI']
 
                 if (!session.user) {
                     if (!publicActions.contains(actionName)) {

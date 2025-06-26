@@ -13,11 +13,6 @@ if (System.properties["${appName}.config.location"]) {
     grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 }
 
-/*println "Loaded config from: ${grails.config.locations}"
-
-
-println "Loaded config from: ${grails.config.locations}"
-println "Database URL: ${grailsApplication.config.dataSource.url}"*/
 
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination

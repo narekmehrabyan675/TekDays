@@ -32,27 +32,21 @@
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'respondents', 'error')} ">
 	<label for="respondents">
 		<g:message code="tekEvent.respondents.label" default="Respondents" />
-		
 	</label>
-	
-
 </div>
+
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'volunteers', 'error')} ">
 	<label for="volunteers">
 		<g:message code="tekEvent.volunteers.label" default="Volunteers" />
-		
 	</label>
 	<g:select name="volunteers" from="${com.tekdays.TekUser.list()}" multiple="multiple" optionKey="id" size="5" value="${tekEventInstance?.volunteers*.id}" class="many-to-many"/>
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'sponsorships', 'error')} ">
 	<label for="sponsorships">
 		<g:message code="tekEvent.sponsorships.label" default="Sponsorships" />
-		
 	</label>
-	
 <ul class="one-to-many">
 <g:each in="${tekEventInstance?.sponsorships?}" var="s">
     <li><g:link controller="sponsorship" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></li>
@@ -61,22 +55,12 @@
 <g:link controller="sponsorship" action="create" params="['tekEvent.id': tekEventInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'sponsorship.label', default: 'Sponsorship')])}</g:link>
 </li>
 </ul>
-
-	%{--<div class="fieldcontain">
-		<label for="sponsorId">Sponsor</label>
-		<g:select name="sponsorId" from="${com.tekdays.Sponsor.list()}" optionKey="id"/>
-	</div>
---}%
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'tasks', 'error')} ">
 	<label for="tasks">
 		<g:message code="tekEvent.tasks.label" default="Tasks" />
-		
 	</label>
-
-
 <ul class="one-to-many">
 <g:each in="${tekEventInstance?.tasks?}" var="t">
     <li><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
@@ -85,8 +69,6 @@
 <g:link controller="task" action="create" params="['tekEvent.id': tekEventInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'task.label', default: 'Task')])}</g:link>
 </li>
 </ul>
-
-
 </div>
 
 
@@ -94,9 +76,7 @@
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'messages', 'error')} ">
 	<label for="messages">
 		<g:message code="tekEvent.messages.label" default="Messages" />
-		
 	</label>
-	
 <ul class="one-to-many">
 <g:each in="${tekEventInstance?.messages?}" var="m">
     <li><g:link controller="tekMessage" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></li>
@@ -105,8 +85,6 @@
 <g:link controller="tekMessage" action="create" params="['tekEvent.id': tekEventInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'tekMessage.label', default: 'TekMessage')])}</g:link>
 </li>
 </ul>
-
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'endDate', 'error')} required">
@@ -115,7 +93,6 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:datePicker name="endDate" precision="day"  value="${tekEventInstance?.endDate}"  />
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'organizer', 'error')} required">
@@ -124,7 +101,6 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:select id="organizer" name="organizer.id" from="${com.tekdays.TekUser.list()}" optionKey="id" required="" value="${tekEventInstance?.organizer?.id}" class="many-to-one"/>
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'startDate', 'error')} required">
@@ -133,7 +109,6 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:datePicker name="startDate" precision="day"  value="${tekEventInstance?.startDate}"  />
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: tekEventInstance, field: 'venue', 'error')} required">
@@ -142,7 +117,6 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="venue" required="" value="${tekEventInstance?.venue}"/>
-
 </div>
 
 <g:hiddenField name="csrfToken" value="${csrfToken}" />

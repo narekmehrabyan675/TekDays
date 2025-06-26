@@ -41,16 +41,10 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        // runtime 'mysql:mysql-connector-java:5.1.29'
-        // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
+
         runtime 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
 
-/*
-        compile 'org.hibernate:hibernate-envers:4.3.11.Final'
-*/
-//        compile 'org.hibernate:hibernate-envers:4.3.11.Final'
 
         compile('org.hibernate:hibernate-envers:4.3.11.Final') {
             transitive = false
@@ -69,53 +63,23 @@ grails.project.dependency.resolution = {
         compile('commons-collections:commons-collections:3.2.1')
 
         runtime('commons-beanutils:commons-beanutils:1.9.4')
-
-        //compile 'org.olap4j:olap4j:0.9.7'
     }
 
     plugins {
         // plugins for the build system only
         build ":tomcat:7.0.70" // or ":tomcat:8.0.22"
-
         // plugins for the compile step
         compile ":scaffolding:2.1.2"
         compile ':cache:1.1.8'
         // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
         compile ":asset-pipeline:2.5.7"
-
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
-
-        //-compile ":searchable:0.6.5"
-        //compile ":elasticsearch:0.0.9"
-
-
         runtime ":jquery:1.11.1"
-        //compile ":jquery-ui:1.8.24"
         compile ":resources:1.2.14"
-
         compile 'org.grails.plugins:mail:1.0.7'
-
         compile ":jasper:1.10.0"
 
-
-
-
-        //compile 'org.hibernate:hibernate-envers:4.3.11.Final'
-
-//        compile ":fields:1.3"
-
-
-
-
-
-
-
-        // Uncomment these to enable additional asset-pipeline capabilities
-        //compile ":sass-asset-pipeline:1.9.0"
-        //compile ":less-asset-pipeline:1.10.0"
-        //compile ":coffee-asset-pipeline:1.8.0"
-        //compile ":handlebars-asset-pipeline:1.3.0.3"
     }
 }

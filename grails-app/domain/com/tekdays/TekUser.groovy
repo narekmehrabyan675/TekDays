@@ -26,9 +26,11 @@ class TekUser {
         fullName blank: false , nullable: false
         userName blank: false , nullable: false
         email blank: false , nullable: false , email: true
-        website url: true , blank: true , nullable: true
+        //website url: true , blank: true , nullable: true
         bio maxSize: 5000 , blank: true , nullable: true
-        password blank: false , nullable: false , validator: { val, obj ->
+        password blank: false , nullable: false
+        //If you want can discomment , but im have old passwords , dont wanna change logic
+        /*password validator: { val, obj ->
             if (!val) return 'password.blank'
             if (val.size() < 8) return 'password.tooShort'
             if (!val.matches(".*[A-Z].*")) return 'password.noUppercase'
@@ -36,7 +38,7 @@ class TekUser {
             if (!val.matches(".*\\d.*")) return 'password.noDigit'
             if (!val.matches(".*[!@#\$%^&*()].*")) return 'password.noSymbol'
             return true
-        }
+        }*/
     }
 
     static TekUser lookupByUsername(String username) {
