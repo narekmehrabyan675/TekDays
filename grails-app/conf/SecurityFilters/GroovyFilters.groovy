@@ -13,11 +13,15 @@ class GroovyFilters {
 
                 def publicActions = ['login', 'validate', 'index', 'show', 'search',
                                      'step1', 'step2', 'step3', 'complete',
-                                     'updateAPI', 'changeLocale' , 'updateAPI']
+                                     'updateAPI', 'changeLocale' , 'updateAPI' , 'updateAPI1']
 
                 if (!session.user) {
                     if (!publicActions.contains(actionName)) {
+
                         def fullUrl = request.forwardURI
+
+
+
                         if (request.queryString) {
                             fullUrl += "?" + request.queryString
                         }

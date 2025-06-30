@@ -121,7 +121,7 @@
         });
 
         const host = window.location.hostname;
-        $('#modalIframe').attr('src', 'http://' + host + ':9090/TekDays/searchable/updatedHQL');
+        $('#modalIframe').attr('src', 'http://' + host + ':8080/TekDays/searchable/updatedHQL');
     });
 
     $('#myModal').on('hidden.bs.modal', function () {

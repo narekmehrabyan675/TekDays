@@ -38,3 +38,5 @@ grailsw.bat
 # OS-specific
 .DS_Store
 Thumbs.db
+/grails-app/services/com/tekdays/RaceService.groovy
+/grails-app/domain/com/tekdays/TekUser1.groovy
